@@ -1,0 +1,522 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,mathtools,amsthm}
+\usepackage{fullpage}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\RR}{\mathcal R}
+\newcommand{\BB}{\mathcal B}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+% The supplied referee report records a warning-free, seven-page
+% compilation of a copy with all three local corrections, with
+% references and citations resolved.
+%% FLAG: This session has no command-execution tool, so the requested
+%% FLAG: pdflatex run could not be repeated here; the compilation
+%% FLAG: results above are attributed to the referee, not to a new run.
+
+\begin{document}
+
+\begin{center}
+\textbf{Crossing families via dual levels}
+\end{center}
+
+\noindent\textbf{Abstract.}
+We prove that there is an absolute constant \(c>0\) such that every
+set of \(n\geq2\) points in the plane with no three collinear contains
+at least \(cn\) pairwise vertex-disjoint segments that cross pairwise
+in their interiors. The proof combines an extraction theorem of
+Pach, Rubin, and Tardos with a deletion argument in a dual arrangement
+of lines. Controlling the deletion separately at each level avoids
+a size-dependent loss.
+
+\section{Introduction}\label{sec:introduction}
+
+How large a family of pairwise crossing segments must a planar point
+set contain? A point set is in \emph{general position} if no three of
+its points are collinear. A \emph{crossing family} is a collection of
+segments spanned by the point set whose endpoints are all distinct
+and whose members cross pairwise in their relative interiors.
+We prove a lower bound proportional to the number of points.
+
+\begin{theorem}[Linear crossing families]\label{thm:main}
+There is an absolute constant \(c>0\) such that every set of \(n\geq2\)
+points in the plane in general position contains a crossing family
+of size at least \(cn\).
+\end{theorem}
+
+The proof combines the near-avoidance extraction theorem of Pach,
+Rubin, and Tardos \cite[Lemma~3.3]{PRT2021} with a deletion estimate
+for two separated point sets. We first define the quantity that
+controls the deletion.
+% The external extraction result is Lemma 3.3 of the cited paper. ([arxiv.org](https://arxiv.org/pdf/1904.08845v2))
+
+Two finite nonempty point sets \(A,B\) are \emph{separated} if their
+convex hulls are disjoint. They can then be strictly separated by a
+line. Now assume that \(A,B\) are separated, that \(A\cup B\) is
+in general position, and that \(|A|=|B|=m\geq1\).
+For distinct points \(p,q\), let \(\ell(p,q)\)
+denote their entire supporting line. Define the \emph{avoidance defect}
+by
+\begin{align}
+ t(A,B)={}&
+ \bigl|\{\{a,a'\}\subseteq A:
+     a\ne a',\ \ell(a,a')\cap\conv(B)\ne\varnothing\}\bigr|
+ \notag\\
+ &+\bigl|\{\{b,b'\}\subseteq B:
+     b\ne b',\ \ell(b,b')\cap\conv(A)\ne\varnothing\}\bigr|.
+ \label{eq:defect}
+\end{align}
+Each counted object is an unordered pair. General position ensures
+that no point of the opposite set lies on the indicated line.
+Consequently, the line meets the opposite convex hull precisely
+when that set has points strictly on both sides of the line.
+
+\begin{proposition}[Dual-level deletion bound]\label{prop:key}
+Let \(m\geq1\) be an integer, and let \(A,B\) be separated
+\(m\)-point sets in the plane whose union is in general position.
+Put \(t=t(A,B)\). After deleting at most \(2t\) of the \(m^2\)
+segments joining \(A\) to \(B\), the remaining segments can be
+partitioned into \(2m-1\) possibly empty crossing families.
+In particular, one such family has size at least
+\begin{equation}
+ \frac{m^2-2t}{2m-1}.
+ \label{eq:keybound}
+\end{equation}
+If \(t\leq m^2/4\), there is a crossing family of size at least \(m/4\).
+\end{proposition}
+
+The proposition includes \(m=1\): the defect is then zero, and the
+unique joining segment forms the required family.
+
+The proof of Proposition~\ref{prop:key} groups joining segments by
+the level of their corresponding dual intersections, where a level
+records how many dual lines lie below an intersection. We mark
+selected lines at intersections representing avoidance defects,
+and delete joining segments whose dual intersections use marked
+lines at the same level. The main difficulty is that a single
+marked line may contain many such intersections.
+Lemma~\ref{lem:repeat} charges repeated incidences to distinct
+defects at that level, while Lemma~\ref{lem:clean} shows that the
+retained intersections give a crossing family. Each defect
+contributes to the deletion bound only at its own level, so summing
+over levels introduces no additional factor depending on \(m\).
+
+Section~\ref{sec:extraction} records the extraction theorem and its
+specialization to complete geometric graphs.
+Sections~\ref{sec:dual} and~\ref{sec:deletion} construct the dual
+sweep and prove Proposition~\ref{prop:key}.
+Section~\ref{sec:linear} chooses fixed parameters to deduce
+Theorem~\ref{thm:main}.
+
+\section{Near-avoidance extraction}\label{sec:extraction}
+
+The following consequence of \cite[Lemma~3.3]{PRT2021} is the only
+external mathematical ingredient. References to definitions and
+lemmas in that paper use the numbering of arXiv:1904.08845v2.
+
+\begin{theorem}[Near-avoidance extraction]\label{thm:extraction}
+There is an absolute constant \(K\geq2\) such that, for every
+\(0<\varepsilon<1\), every positive integer \(m\), and every
+general-position point set \(P\) in the plane of cardinality
+\[
+ n\geq K\varepsilon^{-4}m,
+\]
+there are separated subsets \(A,B\subseteq P\) satisfying
+\[
+ |A|=|B|=m,
+ \qquad
+ t(A,B)\leq\varepsilon m^2.
+\]
+\end{theorem}
+% The parameter dependence and quantifiers agree with Lemma 3.3
+% in the cited arXiv version. ([arxiv.org](https://arxiv.org/pdf/1904.08845v2))
+
+\begin{proof}[Derivation]
+Write \(K_0\) for the absolute constant in
+\cite[Lemma~3.3]{PRT2021}. That lemma applies to a geometric graph
+with \(n\) vertices and at least \(\delta n^2\) edges when
+\[
+ n\geq \frac{K_0m}{\varepsilon^4\delta^5}.
+\]
+It provides separated \(m\)-point sets for which the total number
+of incomparable pairs in the two avoidance orders is at most
+\(\varepsilon m^2\). By \cite[Definition~3.1 and Lemma~2.2]{PRT2021},
+these incomparable pairs are exactly the unordered pairs whose
+supporting line meets the opposite convex hull. Their total is
+therefore \(t(A,B)\).
+% The identification of incomparability with the line--hull condition
+% is stated in Lemma 2.2; Definition 3.1 sums the two counts. ([arxiv.org](https://arxiv.org/pdf/1904.08845v2))
+
+For the complete geometric graph on \(n\geq2\) vertices,
+\[
+ \binom n2\geq \frac{n^2}{4}.
+\]
+Apply the lemma with \(\delta=1/4\), and take
+\[
+ K\geq\max\{2,4^5K_0\}.
+\]
+The hypothesis \(n\geq K\varepsilon^{-4}m\) then ensures both
+\(n\geq2\) and the required size condition.
+\end{proof}
+
+\section{The dual arrangement}\label{sec:dual}
+
+We now fix separated sets \(A,B\), each of size \(m\geq1\), whose
+union is in general position. The aim is to represent each pair
+counted by \(t(A,B)\) as a dual intersection at a single level.
+
+Choose coordinates in which all points of \(A\) have negative first
+coordinate and all points of \(B\) have positive first coordinate.
+We may also assume that all first coordinates are distinct and that
+distinct spanned lines have distinct slopes. To obtain these
+additional conditions, make an arbitrarily small generic
+perturbation. Because there are finitely many triples and every
+triple orientation is nonzero, the perturbation can preserve all
+orientation signs as well as strict separation. It therefore
+preserves \(t(A,B)\) and the crossing relation between every pair
+of spanned segments. Any crossing family obtained after perturbation
+gives a crossing family with the same endpoint labels in the
+original sets.
+
+Dualize a point \(p=(p_x,p_y)\) to the line
+\[
+ p^*(x)=p_xx-p_y.
+\]
+The lines dual to \(A\) form a red family \(\RR\), all of negative
+slope; those dual to \(B\) form a blue family \(\BB\), all of
+positive slope. The distinct first coordinates give distinct dual
+slopes, and general position excludes three concurrent dual lines.
+Moreover, the abscissa of \(p^*\cap q^*\) is the slope of
+\(\ell(p,q)\). Thus all dual intersection abscissas are distinct.
+
+For \(k\in\{1,\ldots,2m-1\}\), a dual intersection has
+\emph{level \(k\)} if exactly \(k-1\) dual lines lie strictly below
+it. At an abscissa \(x\) containing no intersection, let \(L_k(x)\)
+be the set of the \(k\) lowest dual lines, ordered by their values
+at \(x\). As \(x\) increases through a level-\(k\) intersection,
+the two incident lines exchange ranks \(k\) and \(k+1\): one
+leaves \(L_k\), and the other enters. Intersections at other
+levels leave \(L_k\) unchanged.
+
+An intersection of a red and a blue line is \emph{bichromatic};
+an intersection of two lines of the same color is
+\emph{monochromatic}. Every red slope is smaller than every blue
+slope. Hence, before a bichromatic intersection the red line lies
+above the blue line, and afterward it lies below. At a
+bichromatic level-\(k\) intersection, the red line therefore
+enters \(L_k\) and the blue line leaves \(L_k\).
+
+A red--red intersection is \emph{defective} if some blue line lies
+strictly above it and some blue line lies strictly below it.
+Define defective blue--blue intersections by interchanging the
+colors. Let
+\begin{align*}
+ T_k^R&=\#\{\text{defective red--red intersections of level }k\},\\
+ T_k^B&=\#\{\text{defective blue--blue intersections of level }k\},
+\end{align*}
+and put \(T_k=T_k^R+T_k^B\).
+
+These intersections encode the avoidance defect exactly. For example,
+if \((s,h)=a^*\cap a'^*\), then \(\ell(a,a')\) has equation
+\(y=sx-h\). Blue dual lines lie both above and below \((s,h)\)
+precisely when points of \(B\) lie on both sides of \(\ell(a,a')\).
+The analogous statement holds for pairs in \(B\). Since every
+dual intersection has a unique level,
+\begin{equation}
+ \sum_{k=1}^{2m-1}T_k=t(A,B).
+ \label{eq:sumdefects}
+\end{equation}
+
+It remains to show that, at each level \(k\), deleting at most
+\(2T_k\) bichromatic intersections leaves a crossing family in the
+primal plane.
+
+\section{Levelwise deletion}\label{sec:deletion}
+
+Fix a level \(k\). All markings in this section refer only to this
+level; marks do not carry from one level to another.
+
+At each defective red--red level-\(k\) intersection, mark the red
+line that \emph{leaves} \(L_k\). At each defective blue--blue
+level-\(k\) intersection, mark the blue line that \emph{enters}
+\(L_k\). Thus each defective intersection marks one line, though a
+line may receive several marks. A bichromatic level-\(k\)
+intersection is \emph{clean} if neither incident line is marked.
+
+The first lemma explains this directional choice. A red line must
+leave \(L_k\) between successive bichromatic entrances; a blue
+line must enter between successive bichromatic exits. The
+intermediate changes that account for these repetitions are
+necessarily defective.
+
+\begin{lemma}[Repeated incidences]\label{lem:repeat}
+For a red line \(r\), let \(d_k(r)\) be the number of bichromatic
+level-\(k\) intersections on \(r\), and let \(u_k(r)\) count the
+defective red--red level-\(k\) intersections at which \(r\) leaves
+\(L_k\). Then
+\[
+ d_k(r)\leq1+u_k(r).
+\]
+For a blue line \(b\), define \(d_k(b)\) analogously, and let
+\(u_k(b)\) count the defective blue--blue level-\(k\) intersections
+at which \(b\) enters \(L_k\). Then
+\[
+ d_k(b)\leq1+u_k(b).
+\]
+\end{lemma}
+
+\begin{proof}
+If \(d_k(r)\leq1\), the red inequality is immediate. Otherwise,
+consider two consecutive bichromatic level-\(k\) intersections
+on \(r\), with abscissas \(s<s'\) and blue partners \(b,b'\),
+respectively. Immediately after \(s\), the line \(r\) belongs to
+\(L_k\); immediately before \(s'\), it does not. It must therefore
+leave \(L_k\) at an intermediate level-\(k\) intersection.
+A red line can only enter, not leave, at a bichromatic
+intersection, so this exit is red--red.
+
+For every \(x\in(s,s')\), the slope inequalities give
+\[
+ b(x)>r(x)>b'(x).
+\]
+Indeed, \(b\) lies above \(r\) after their intersection at \(s\),
+whereas \(b'\) lies below \(r\) before their intersection at \(s'\).
+The red--red exit is therefore defective. The open intervals
+between successive bichromatic intersections on \(r\) are
+disjoint, so they require distinct defective exits. Thus
+\(u_k(r)\geq d_k(r)-1\).
+
+For a blue line \(b\), let two consecutive bichromatic
+level-\(k\) intersections have abscissas \(s<s'\) and red
+partners \(r,r'\). Immediately after \(s\), the line \(b\) is
+outside \(L_k\); immediately before \(s'\), it is inside.
+An intermediate entrance is therefore required. Since a blue
+line leaves at a bichromatic intersection, this entrance is
+blue--blue. Throughout \((s,s')\),
+\[
+ r(x)<b(x)<r'(x),
+\]
+so the entrance is defective. Again, disjoint intervals require
+distinct entrances, proving the blue inequality.
+\end{proof}
+
+\begin{lemma}[Bounded deletion]\label{lem:deletion}
+At most \(2T_k\) bichromatic level-\(k\) intersections are not clean.
+\end{lemma}
+
+\begin{proof}
+Let \(S_R\) be the set of marked red lines. Each defective red--red
+level-\(k\) intersection marks exactly its exiting line. Hence
+\[
+ |S_R|\leq T_k^R,
+ \qquad
+ \sum_{r\in S_R}u_k(r)=T_k^R.
+\]
+Lemma~\ref{lem:repeat} gives
+\[
+ \sum_{r\in S_R}d_k(r)
+ \leq |S_R|+\sum_{r\in S_R}u_k(r)
+ \leq2T_k^R.
+\]
+This bounds the number of bichromatic level-\(k\) intersections
+incident to marked red lines.
+
+For the set \(S_B\) of marked blue lines, the same count uses
+entrances rather than exits:
+\[
+ |S_B|\leq T_k^B,
+ \qquad
+ \sum_{b\in S_B}u_k(b)=T_k^B,
+ \qquad
+ \sum_{b\in S_B}d_k(b)\leq2T_k^B.
+\]
+Every non-clean intersection is incident to a marked red line or
+a marked blue line. Adding the two bounds, with possible double
+counting, gives at most
+\(2T_k^R+2T_k^B=2T_k\) non-clean intersections.
+\end{proof}
+
+\begin{lemma}[Clean intersections give a crossing family]
+\label{lem:clean}
+The primal segments corresponding to the clean bichromatic
+intersections at level \(k\) have distinct endpoints and cross
+pairwise in their interiors.
+\end{lemma}
+
+\begin{proof}
+We first exclude shared endpoints. We then establish strict height
+inequalities at each of two clean intersections; these inequalities
+give the two side-of-line tests for a proper primal crossing.
+
+An unmarked red line has \(u_k(r)=0\), so
+Lemma~\ref{lem:repeat} shows that it is incident to at most one
+bichromatic level-\(k\) intersection. The same conclusion holds
+for an unmarked blue line. Thus clean intersections use distinct
+dual lines, and the corresponding primal segments have distinct
+endpoints. If there are fewer than two clean intersections, the
+crossing assertion is vacuous.
+
+Consider two clean intersections
+\[
+ q=(s,h)=r\cap b,
+ \qquad
+ q'=(s',h')=r'\cap b',
+ \qquad s<s',
+\]
+where \(r,r'\) are red and \(b,b'\) are blue. We first prove
+\begin{equation}
+ r'(s)>h>b'(s).
+ \label{eq:firstbracket}
+\end{equation}
+The four lines are distinct, and no three dual lines concur, so
+neither comparison can be an equality.
+
+Suppose that \(r'(s)<h\). Then \(r'\) belongs to \(L_k\) near
+\(s\), but it is outside \(L_k\) immediately before its
+bichromatic intersection at \(s'\). It must leave \(L_k\) at
+an intermediate level-\(k\) intersection. This exit is red--red,
+because a red line enters at a bichromatic intersection.
+
+Throughout \((s,s')\), we have
+\[
+ r'(x)<b(x),
+ \qquad
+ r'(x)>b'(x).
+\]
+For the first inequality, use \(r'(s)<b(s)=h\) and the strictly
+negative slope of \(r'-b\). For the second, use the fact that
+\(r'\) lies above \(b'\) before their intersection at \(s'\).
+The red--red exit is consequently defective and marks \(r'\),
+contrary to the cleanliness of \(q'\). Hence \(r'(s)>h\).
+
+Now suppose that \(b'(s)>h\). The line \(b'\) is outside \(L_k\)
+near \(s\), but inside immediately before \(s'\). It must enter
+\(L_k\) at an intermediate blue--blue level-\(k\) intersection.
+Throughout \((s,s')\),
+\[
+ b'(x)>r(x),
+ \qquad
+ b'(x)<r'(x).
+\]
+The first inequality follows from \(b'(s)>r(s)\) and the strictly
+positive slope of \(b'-r\). The second holds before the
+intersection of \(b'\) and \(r'\). Thus this entrance is
+defective and marks \(b'\), again contradicting the cleanliness
+of \(q'\). This proves \eqref{eq:firstbracket}.
+
+To obtain the inequalities at \(q'\), reverse the horizontal
+coordinate and interchange the color names. Red lines again have
+negative slopes and blue lines positive slopes. Vertical ranks
+and defectiveness are unchanged. Under the reversed sweep, an old
+red exit becomes a new blue entrance, and an old blue entrance
+becomes a new red exit. The marking rule, and hence cleanliness,
+is therefore preserved. Applying \eqref{eq:firstbracket} with the
+two intersections in reversed order gives
+\begin{equation}
+ b(s')>h'>r(s').
+ \label{eq:secondbracket}
+\end{equation}
+
+We now translate the two brackets back to the primal plane.
+Let \(a\in A\) and \(c\in B\) correspond to \(r\) and \(b\).
+Their supporting line has equation \(y=sx-h\), and for any
+primal point \(p\),
+\[
+ \det(c-a,p-a)
+ =-(c_x-a_x)\bigl(p^*(s)-h\bigr).
+\]
+Since \(c_x-a_x>0\), equation~\eqref{eq:firstbracket} places the
+endpoints of the other primal segment strictly on opposite sides
+of \(\ell(a,c)\). Equation~\eqref{eq:secondbracket} gives the
+reciprocal statement. The supporting lines therefore meet in the
+relative interior of both segments, as required.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:key}]
+Each of the \(m^2\) joining segments corresponds to a bichromatic
+intersection at one of the \(2m-1\) levels. At every level, discard
+precisely the intersections that are not clean.
+Lemma~\ref{lem:deletion} and \eqref{eq:sumdefects} bound the total
+number discarded by
+\[
+ 2\sum_{k=1}^{2m-1}T_k=2t.
+\]
+By Lemma~\ref{lem:clean}, the retained intersections at each level
+give a crossing family. These families partition the retained
+segments, since every dual intersection has a unique level.
+The perturbation described in Section~\ref{sec:dual} preserves
+both the defect and all crossing relations, so the same partition,
+with the same endpoint labels, applies to the original sets.
+
+Averaging the cardinalities of the \(2m-1\) families proves
+\eqref{eq:keybound}. If \(t\leq m^2/4\), then
+\[
+ \frac{m^2-2t}{2m-1}
+ \geq \frac{m^2}{2(2m-1)}
+ \geq \frac m4. \qedhere
+\]
+\end{proof}
+
+\section{Proof of the linear bound}\label{sec:linear}
+
+We use the extraction theorem with the fixed error
+\(\varepsilon=1/4\), for which Proposition~\ref{prop:key} retains
+a crossing family of size at least one quarter of either extracted
+set. It remains to choose the extraction scale and account for
+small point sets.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Take \(K\) from Theorem~\ref{thm:extraction}, choose an integer
+\[
+ H\geq K4^4,
+\]
+and set \(c=1/(8H)>0\). These constants are absolute; in particular,
+\(H\geq2\).
+
+Let \(P\) be a general-position set of \(n\geq2\) points in the
+plane. First suppose that \(n\geq2H\), and put
+\(m=\lfloor n/H\rfloor\). Then
+\[
+ n\geq Hm\geq K4^4m,
+ \qquad
+ m\geq \frac{n}{2H}.
+\]
+Theorem~\ref{thm:extraction}, applied with \(\varepsilon=1/4\),
+provides separated subsets \(A,B\subseteq P\) satisfying
+\[
+ |A|=|B|=m,
+ \qquad
+ t(A,B)\leq \frac{m^2}{4}.
+\]
+Proposition~\ref{prop:key} gives a crossing family of size at least
+\[
+ \frac m4\geq \frac{n}{8H}=cn.
+\]
+All its segments are spanned by the original point set \(P\).
+
+If \(2\leq n<2H\), choose any two points of \(P\). Their segment
+is a crossing family of size one, and
+\[
+ 1\geq \frac{n}{8H}=cn.
+\]
+This covers all \(n\geq2\).
+\end{proof}
+
+\begin{thebibliography}{9}
+
+\bibitem{PRT2021}
+J.~Pach, N.~Rubin, and G.~Tardos.
+\newblock Planar point sets determine many pairwise crossing segments.
+\newblock \emph{Advances in Mathematics} \textbf{386} (2021), 107779.
+\newblock doi: \nolinkurl{10.1016/j.aim.2021.107779}.
+% The journal metadata and DOI agree with the publisher's record. ([sciencedirect.com](https://www.sciencedirect.com/science/article/pii/S0001870821002188?utm_source=openai))
+\newblock Also arXiv:1904.08845v2, April 30, 2023.
+% The arXiv submission history records this version and date. ([arxiv.org](https://arxiv.org/abs/1904.08845v2))
+
+\end{thebibliography}
+
+\end{document}

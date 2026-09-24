@@ -1,0 +1,8 @@
+.lake/
+.DS_Store
+*.olean
+*.ilean
+*.aux
+*.log
+*.out
+*.pdf
